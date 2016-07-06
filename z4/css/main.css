@@ -71,7 +71,15 @@ body {
     line-height: 3em;
     text-align: center;
 }
-
+.marl{
+    margin-right: 4%;
+}
+.mars{
+    margin-right: 2%;
+}
+.mal{
+    margin-left: -2%;
+}
 .curr{
     color: #000;
     font-weight: bold;
