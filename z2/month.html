@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"/>
+	  <meta name="msapplication-tap-highlight" content="no"/>
+	  <meta name='keywords' content=""/>
+	  <meta name="description" content=""/>
+    <title>折线图</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+
+<body>
+    <div class="container">
+    		<div class="switch">
+    			<span class="month">月</span>
+    			<span class="year current">年</span>
+    		</div>
+        <div id="chart"></div>
+    </div>
+    <script src="js/jquery.js"></script>
+    <script src="js/highcharts.js"></script>
+    <script src="js/exporting.js"></script>
+    <script type="text/javascript">
+    (function() {
+        var width = window.screen.width;
+        var style = document.createElement('style');
+        style.innerHTML = 'html{font-size:' + width / 375 * 62.5 + '%;}';
+        document.head.appendChild(style);
+    })();
+    (function() {
+        // $.getJSON('https://www.highcharts.com/samples/data/jsonp.php?filename=usdeur.json&callback=?', function (data) {
+        var bmiData = [null,20,17,28,20,14,23,15,17,19,20,12,17,null];//返回的数据，前后加null
+        var mon;//月
+        var days;//天数
+        var isMonth = true;//显示天数
+        var options = {
+            chart: { //配置
+                type: 'spline',
+                // type:'scatter',
+                // type: 'area',
+                // defaultSeriesType: 'spline',//曲线
+                spacingRight: 20,
+                // spacingLeft: 20,
+                showAxes: true, //空图动态添加数值时是否显示数轴
+                plotBackgroundColor: '#fff', //绘图区背景
+                renderTo: 'chart',
+                events: {                                                           
+                    load: function() {   
+                        var sx,sy,mx,my,cha = $('#chart')[0];
+                        cha.addEventListener('touchstart',function(e){
+                                e.preventDefault();
+                                // e.stopPropagation();
+                                sx = e.touches[0].clientX;
+                                sy = e.touches[0].clientY;
+                                // chart.tooltip.enabled = false;
+                        });
+                        cha.addEventListener('touchmove', function(e) {
+                               e.preventDefault();
+                               // e.stopPropagation();
+                               mx = e.touches[e.touches.length - 1].clientX;
+                               my = e.touches[e.touches.length - 1].clientY;
+                               // chart.tooltip.enabled = false;
+                               // console.log(char.tooltip.enabled);
+                        });
+                       cha.addEventListener('touchend',function(e){
+                            e.preventDefault();
+                            // e.stopPropagation();
+                            // console.log($(e.target).attr('fill'));//点
+                        if($(e.target).attr('fill') == '#ff7e6d'){//点击数值圆点
+                        		console.log(e);
+                            }else{
+                            var s1 = sx - mx;//触摸点水平方向的距离
+                            var s2 = sy - my;//触摸点垂直方向的距离
+                            var xMin = chart.xAxis[0].getExtremes().min;//x轴最小值
+                            var xMax = chart.xAxis[0].getExtremes().max;//x轴最大值
+                           if(s1 >= 50 && s2 < 10){//向右滑动
+                                if (xMax == 13 && isMonth){
+	                                $(this).unbind(e);
+	                                return;
+                                };
+                                if(xMax == days+1 && !isMonth){
+                                	$(this).unbind(e);
+	                                return;
+                                }
+                                chart.xAxis[0].setExtremes(xMin+1,xMax+1,true,true);
+                           }else if(s2 < 50 && s1 < 10){
+                                if (xMin == 0) {
+                                    $(this).unbind(e);
+                                		return;
+                            		};
+                                chart.xAxis[0].setExtremes(xMin-1,xMax-1,true,true);
+                           }else{
+                                return;
+                           };
+                        };  
+                        });                                                   
+                    }                                                               
+                }
+            },
+            title: {
+                text: '近期BMI值变化',
+                align: 'left',
+                style: {
+                    color:'#333',
+                    fontSize: '1.4rem'
+                }
+            },
+            xAxis: {
+                allowDecimals: false, //坐标轴刻度是否为小数
+                gridLineWidth: 0, //网格线宽度
+                categories:[null,1,2,3,4,5,6,7,8,9,10,11,12,null],
+                labels: {
+                    align: 'center', //轴标签水平对齐方式
+                    // x: 10,
+                    y: 25, //刻度坐标
+                    style: {
+		                	color: '#666',
+		                	fontSize: '1.4rem'
+                		}
+                },
+                animation: false,
+                showFirstLabel: false,
+                showLastLabel: false,
+                min: 0,
+                max: 7,
+                overflow: false,
+                tickWidth: 1,//刻度竖线
+                tickInterval: 1,
+                lineColor:'#e5e5e5'
+            },
+            yAxis: {
+                // type: 'linear',
+                allowDecimals: false, //控制数轴是否显示小数
+                min: 13,
+                max: 25,
+                animation: false,
+                showFirstLabel: false,
+                showLastLabel: false,
+                gridLineWidth: 1,
+                gridLineDashStyle: 'shortDash',
+                gridZIndex: 1,
+                tickInterval: 6, //相当于step
+                tickWidth: 1, //刻度竖线
+                lineWidth: 1,
+                title: {
+                    text: '',
+                    rotation: 0,
+                    y: -5
+                },
+                labels: {
+                	align: 'center',
+                	style: {
+                		color:'#666'
+                	},
+                	x: -25,
+                  y: 5,
+                },
+                lineColor:'#e5e5e5'
+            },
+            series: [{
+                // type: 'area',//渐变区域
+                data: bmiData,
+                color: '#ff7e6d',
+                lineWidth: 1
+                // name: 'BMI'
+            }],
+            plotOptions: {
+                line: { //数据点显示数值
+                    dataLabels: {
+                        enabled: false,
+                        formatter: function() {
+                            return this.y; //点显示的数值
+                        }
+                    }
+                },
+                series: {
+                    allowPointSelect: true,
+                    fillColor: {//渐变背景
+                        linearGradient: [0, 0, 0, 150],
+                        stops: [
+                            [0, '#ff7e6d'],
+                            [1, Highcharts.Color('#ff7e6d').setOpacity(0).get('rgba')]
+                        ]
+                    },
+                    marker:{//交点样式
+                    	fillColor: '#fff',
+                    	lineWidth: 1,
+                    	lineColor: '#ff7e6d',
+                    	states:{
+                    		hover:{
+                    			fillColor: '#ff7e6d'
+                    		}
+                    	}
+                    },
+                    point: {
+                        events: {
+                            // click: function () {
+                            //     console.log(this);
+                            //     var ele = chart.renderer.label(this.y,  this.plotX + chart.plotLeft -20 , this.plotY + chart.plotTop - 45, 'callout', this.plotX + chart.plotLeft, this.plotY + chart.plotTop)
+                            //      .css({
+                            //         color: '#fff',
+                            //         align: 'center'
+                            //     })
+                            //     .attr({
+                            //         fill: 'rgba(255,116,109,.85)',
+                            //         padding: 8,
+                            //         r: 5,
+                            //         zIndex: 6,
+                            //         fontSize: '1.4rem'
+                            //     })
+                            //     .add();
+                            //     setTimeout(function(){
+                            //         ele.destroy();
+                            //     },500);
+                            // },
+                        //      select: function () {
+                        //     var text = this.category + ': ' + this.y + ' was last selected',
+                        //         chart = this.series.chart;
+                        //         console.log(chart);
+                        //     if (!chart.lbl) {
+                        //         chart.lbl = chart.renderer.label(text, 100, 70)
+                        //             .attr({
+                        //                 padding: 10,
+                        //                 r: 5,
+                        //                 fill: '#00f',
+                        //                 zIndex: 5
+                        //             })
+                        //             .css({
+                        //                 color: '#FFFFFF'
+                        //             })
+                        //             .add();
+                        //     } else {
+                        //         chart.lbl.attr({
+                        //             text: text
+                        //         });
+                        //     }
+                        // }
+                        }
+                    }
+                }
+            },
+            tooltip: {
+            	enabled: false,//禁用
+                animation: false, //hover提示框动画
+                stickyTracking:false,//提示框的触发方式
+                backgroundColor: 'rgba(255,116,109,.85)',
+                borderRadius: 5,
+                hideDelay: 100,
+                userHIML: true,
+                style: {
+                	width:'2rem',
+                	height:'2rem',
+                    color: '#fff',
+                    fontSize: '1.4rem',
+                    lineHeight: '2rem'
+                },
+                headerFormat: '',
+                pointFormat: '<div class="tool">{point.y}',
+                footerFormat: '</div>'
+            },
+            legend: {//折线图标
+            	enabled: false
+	        	},
+	        	credits: {//隐藏商标
+	          		enabled:false
+						},
+						exporting: {//隐藏导出按钮
+	            	enabled: false
+	          }
+        };
+        // });
+    // });
+        var chart = new Highcharts.Chart(options);
+        // 开关按钮点击事件
+        $('.switch').on('click','span',function(){
+        	//是否是闰年
+			    var isRun = false;
+			    mon = new Date().getMonth() + 1;
+			    var fullYear = new Date().getFullYear();
+			    run(fullYear);
+			    if(mon == 3 || 6 || 9 || 11){
+			    	days = 30;
+			    }else if(mon == 2){
+			    	if(isRun){
+			    		days = 29;
+			    	}else{
+			    		days = 28;
+			    	}
+			    }else{
+			    	days = 31;
+			    };
+        	$(this).addClass('current').siblings('span').removeClass('current');//开关按钮切换背景
+        	if($(this).text() == '月'){
+        		var arrDay = [null];//存放x轴刻度
+        		isMonth = false;
+        		for(var i = 1; i < days+1; i++){
+        			arrDay.push(mon+'/'+i);
+        		}
+        	arrDay.push(null);
+            chart.xAxis[0].setExtremes(0,7);//设置min，max
+        	chart.xAxis[0].setCategories(arrDay);//设置x轴刻度
+        	return;
+        	};
+        	if($(this).text() == '年'){
+        		var arrMonth = [null];//存放x轴刻度
+        		isMonth = true;
+        		for(var i = 1; i < 13; i++){
+        			arrMonth.push(i);
+        		};
+        		arrMonth.push(null);
+                chart.xAxis[0].setExtremes(0,7);//设置min，max
+        		chart.xAxis[0].setCategories(arrMonth);
+        		return;
+        	}
+        });
+        //判断闰年方法
+        function run(a){
+						if( (a%4==0 && a%100!=0) || (a%400==0 && a%100==0) ){
+							isRun = true;
+						}else{
+							isRun = false;
+						}
+			  };
+    })();
+
+ 
+    </script>
+</body>
+
+</html>

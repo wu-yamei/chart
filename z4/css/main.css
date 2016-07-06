@@ -1,0 +1,266 @@
+* {
+    webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+img {
+    width: 100%;
+    display: block;
+}
+
+ul,
+ul li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    width: 100%;
+    height: 100%;
+    // overflow: hidden;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.container {
+    width: 100%;
+    margin-bottom: 2%;
+    overflow: hidden;
+    background: #fff;
+}
+
+
+/* 顶部蓝条 */
+
+.header {
+    position: relative;
+    width: 100%;
+    padding-left: 3%;
+    padding-top: 3%;
+    padding-bottom: 3%;
+    // margin-bottom: 2%;
+    text-align: center;
+    font-size: 1.6rem;
+    background: #fff;
+    color: #b4994b;
+}
+
+.header > img {
+    width: 5%;
+    display: inline-block;
+    float: left;
+    vertical-align: middle;
+}
+
+.head-title {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    -webkit-transform: translate(-50%, 55%);
+    transform: translate(-50%, 55%);
+}
+
+/* 顶部导航条 */
+.swiper-container{
+    margin-left: 45%;
+    color: #999;
+    font-size: 1.4rem;
+    line-height: 3em;
+    text-align: center;
+}
+
+.curr{
+    color: #000;
+    font-weight: bold;
+    background: url('../imgs/point1.png') no-repeat bottom left;
+    background-size: contain;
+}
+
+.bmi {
+    width: 100%;
+    text-align: center;
+    font-size: 1.6rem;
+    color: #3ac638;
+    padding-top: 8%;
+    padding-bottom: 5%;
+}
+
+
+/*bmi进度条*/
+
+.range {
+    padding: 5% 0 10% 0;
+}
+
+.range-bar {
+    position: relative;
+    width: 80%;
+    margin-left: 10%;
+}
+
+.green,
+.blue,
+.orange {
+    float: left;
+    width: 33%;
+    border: 2px solid;
+}
+
+.green {
+    border-color: #3ac638;
+    width: 34%;
+}
+
+.blue {
+    border-color: #1c9aff;
+}
+
+.orange {
+    border-color: #ffa801;
+}
+
+
+/*刻度*/
+
+.labels {
+    position: relative;
+    width: 100%;
+    padding: 5% 0;
+}
+
+.labels > span {
+    position: absolute;
+    left: 31%;
+    color: #666;
+    font-size: 1.2rem;
+}
+
+.labels > span:first-child {
+    left: 13%;
+}
+
+.labels > span:nth-child(3) {
+    left: 48%;
+}
+
+.labels > span:nth-child(4) {
+    left: 63%;
+}
+
+.labels > span:last-child {
+    left: 78%;
+}
+
+
+/* 菱形块 */
+
+.rect {
+    position: absolute;
+    top: 2px;
+    left: 50%;
+    width: 3%;
+    -webkit-transform: translate(0, -50%);
+    transform: translate(0, -50%);
+}
+
+
+/* 说明部分 */
+
+.caption {
+    padding: 3% 3%;
+    overflow: hidden;
+}
+
+.caption img {
+    display: inline-block;
+    width: 5%;
+    vertical-align: middle;
+    margin-right: 2%;
+}
+
+.caption a {
+    float: right;
+    text-decoration: none;
+    color: #b4994b;
+    font-size: 1.2rem;
+}
+
+.caption a:hover {
+    color: #b4994b;
+}
+.caption a img{
+    width: 18%;
+    margin-right: 5%;
+}
+.caption-tit {
+    color: #b4994b;
+    font-size: 1.4rem;
+}
+
+.caption-text {
+    width: 100%;
+    padding: 2% 0 4% 0;
+    font-size: 1.4rem;
+    color: #999;
+}
+
+
+/*折线图*/
+
+#chart {
+    position: relative;
+    width: 100%;
+    height: 20rem;
+}
+
+.chart-parent {
+    position: relative;
+    width: 100%;
+    padding-top: 5%;
+    // padding-bottom: 3%;
+    margin-bottom: 0;
+}
+
+/* 年月开关按钮 */
+
+.switch {
+    position: absolute;
+    top: 8%;
+    right: 5%;
+    z-index: 1000;
+    width: 20%;
+    // height: 4.2rem;
+    border: 1px solid #b4994b;
+    border-radius: 5px;
+    color: #b4994b;
+    background: #fff;
+    font-size: 1rem;
+}
+
+.switch > span {
+    float: left;
+    width: 50%;
+    text-align: center;
+    padding-top: 5%;
+    padding-bottom: 5%;
+}
+
+.current {
+    color: #fff;
+    background: #b4994b;
+}
+
+
+/* touch 对象 */
+
+#touchObj {
+    position: relative;
+    top: -4rem;
+    left: 0;
+    z-index: 1000;
+    width: 100%;
+    height: 4rem;
+}

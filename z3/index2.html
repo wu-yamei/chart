@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name='keywords' content="" />
+    <meta name="description" content="" />
+    <title>数据详情</title>
+    <link rel="stylesheet" type="text/css" href="css/swiper-3.2.7.min.css">
+    <link rel="stylesheet" type="text/css" href="css/main2.css">
+</head>
+
+<body>
+    <!-- 顶部后退条 -->
+    <div class="container header">
+        <img src="imgs/lt-arrow.png">
+        <span class="head-title">数据详情</span>
+    </div>
+    <!-- 顶部项目选择 -->
+    <div class="container top-content">
+   
+         <div class="swiper-container">
+            <div class="swiper-wrapper">
+                  <div class="swiper-slide">
+                    <div class="title curr">BMI</div>
+                  </div>
+                  <div class="swiper-slide">
+                    <div class="title">脂肪</div>
+                  </div>
+                  <div class="swiper-slide">
+                    <div class="title">卡路里</div>
+                  </div>
+                  <div class="swiper-slide">
+                    <div class="title">身高</div>
+                  </div>
+                  <div class="swiper-slide">
+                    <div class="title">身高</div>
+                  </div>
+                  <div class="swiper-slide">
+                    <div class="title">身高</div>
+                  </div>
+                  <div class="swiper-slide">
+                    <div class="title">身高</div>
+                  </div>
+                  <div class="swiper-slide">
+                    <div class="title">身高</div>
+                  </div>
+            </div>
+        </div>
+        
+        <div class="bmi"><span>BMI值</span><span>23.6</span>&nbsp;<span>标准</span></div>
+        <div class="range">
+            <div class="range-bar">
+                <div class="blue"></div>
+                <div class="green"></div>
+                <div class="orange"></div>
+                <div class="labels"><span>偏低</span><span>19</span><span>标准</span><span>25</span><span>偏高</span></div>
+                <img class="rect" src="imgs/rect.png">
+            </div>
+        </div>
+    </div>
+    <!-- 说明部分 -->
+    <div class="container caption">
+        <div class="caption-tit"><img src="imgs/bz.png">BMI值标准 <a href="#">(规则说明)</a></div>
+        <div class="caption-text">目前BMI指数正常，身材指数完美，要继续保持哦！</div>
+    </div>
+    <!-- 折线图 -->
+    <div class="container chart-parent">
+        <div class="switch">
+            <!-- 切换开关 -->
+            <span class="month">月</span>
+            <span class="year current">年</span>
+        </div>
+        <div id="chart"></div>
+        <!-- 图表容器 -->
+        <div id="touchObj"></div>
+        <!-- touch对象 -->
+    </div>
+    <script src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/swiper-3.3.1.min.js"></script>
+    <script src="js/highcharts.js"></script>
+    <script src="js/exporting.js"></script>
+    <script type="text/javascript">
+        (function() {
+            var width = window.screen.width;
+            var style = document.createElement('style');
+            style.innerHTML = 'html{font-size:' + width / 375 * 62.5 + '%;}';
+            document.head.appendChild(style);
+        })();
+    </script>
+    <script type="text/javascript">
+        (function() {
+              var mySwiper = new Swiper('.swiper-container',{
+                    slidesPerView: 4,//显示几个slide
+                    onTouchMove: function(swiper){
+                          $('.swiper-container').css('margin-left',10);
+                    }
+              }); 
+              $('.title').click(function(e){
+                e.preventDefault();
+                $(this).addClass('curr').parent().siblings().find('.title').removeClass('curr');
+              }) 
+        })();
+    </script>
+    <script type="text/javascript" src="js/main2.js"></script>
+</body>
+
+</html>
