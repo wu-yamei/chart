@@ -24,9 +24,12 @@
    
          <div class="swiper-container">
             <div class="swiper-wrapper">
-                  <div class="swiper-slide mars">
-                    <div class="title curr">BMI</div>
+                 <div class="swiper-slide">
+                    <div class="title curr">体重</div>
                   </div>
+                  <div class="swiper-slide mars">
+                    <div class="title">BMI</div>
+                  </div>    
                   <div class="swiper-slide marl">
                     <div class="title">内脏脂肪</div>
                   </div>
@@ -90,18 +93,36 @@
             style.innerHTML = 'html{font-size:' + width / 375 * 62.5 + '%;}';
             document.head.appendChild(style);
         })();
-        (function() {
-              var mySwiper = new Swiper('.swiper-container',{
-                    slidesPerView: 3,//显示几个slide
-                    onTouchMove: function(swiper){
-                          $('.swiper-container').css('margin-left',10);
-                    }
-              }); 
-              $('.title').click(function(e){
-                e.preventDefault();
-                $(this).addClass('curr').parent().siblings().find('.title').removeClass('curr');
-              }) 
-        })();
+          var mySwiper = new Swiper('.swiper-container',{
+                slidesPerView: 3,//显示几个slide
+                onTouchMove: function(swiper){
+                      $('.swiper-container').css('margin-left',10);
+                }
+          }); 
+          $('.title').click(function(e){
+            e.preventDefault();
+            $(this).addClass('curr').parent().siblings().find('.title').removeClass('curr');
+          }) 
+        //进度条
+        var num = Math.random() * (30 - 13) + 13;
+        console.log(num);
+        var rect = $('.rect');
+        var left = (num - 13) / 18 * 100 - 1 + '%';
+        if (num < 19) {
+            rect.attr('src', 'imgs/blue.png');
+        } else if (num > 25) {
+            rect.attr('src', 'imgs/orange.png');
+        } else {
+            rect.attr('src', 'imgs/rect.png');
+        }
+        rect.css('left', left);
+        window.onload = function(){
+           var index = $('.curr').parents('.swiper-slide').index();
+           if(index > 2){
+            $('.swiper-container').css('margin-left',0);
+           }
+           mySwiper.slideTo(index);
+        }
     </script>
     <script type="text/javascript" src="js/main.js"></script>
 </body>
